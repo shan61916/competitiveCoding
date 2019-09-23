@@ -14,47 +14,47 @@ typedef   double dll ;
 #define   pll pair<ll, ll>
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
+ll n, m;
+string s;
 
-
+ll fast_exp(ll base, ll exp) {
+    ll res=1;
+    while(exp>0) {
+       if(exp%2==1) res=(res*base);
+       base=(base*base);
+       exp/=2;
+    }
+    return res;
+}
+ll recurse(ll idx, ll sum) {
+  if(idx == n) {
+    if(sum%m == 0) return 1;
+    return 0;
+  }
+  ll ans = 0;
+  if(s[idx] == '_') {
+   ans = ans + recurse(idx+1, (sum%m + fast_exp(2, n-1-idx)%m)%m) ;
+   ans = ans + recurse(idx+1, sum%m);
+  } else if(s[idx] == '1') {
+    ans = ans + recurse(idx+1, (sum%m + fast_exp(2, n-1-idx)%m)%m) ;
+  } else if(s[idx] == '0') {
+    ans = ans + recurse(idx+1, sum%m);
+  }
+  return ans;
+}
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  ll n, k;
-  cin >> n >> k;
-  vector<ll> a;
-  ll tp;
-  for(ll i = 0; i < n; i++){
-  	cin >> tp;
-  	a.pb(tp);
+  ll T;
+  cin >> T;
+  while(T--){
+   cin >> n >> m;
+   cin >> s;
+   // memset(dp, -1, sizeof(dp));
+   ll ans = recurse(0, 0);
+   cout << ans << endl;   
   }
-  ll inc;
-  cin >> inc;
-  vll b ;
-  for(ll i = 0; i < n; i++) {
-  	ll x = a[i] - k ;
-  	x = (ll)ceil(x/inc);
-  	b.pb(max(0ll, x));
-  }
-  vll c;
-  for(ll i = 0; i < n; i++) {
-  	ll x;
-  	cin >> x;
-  	c.pb(x);
-  }
-  // for(auto it: b) cout << it << " ";
-  sort(all;
-  ll tt = 0;
-  for(ll i = 1; i < n; i++) c[i]+= c[i-1];
-  bool foo = true;
-  for(ll i = 0; i < n; i++) {
-  	if(b[i] > i+1) foo = false;
-  	else {
-  		tt = max(tt, c[b[i]]);
-  	}
-  }
-  if(!foo) cout << -1;
-  else cout << tt << endl;
   return 0;
 } //good night.

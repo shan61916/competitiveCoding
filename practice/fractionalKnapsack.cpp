@@ -1,22 +1,10 @@
   //shan61916
 #include <bits/stdc++.h>
   using namespace std;
-typedef   long long ll;
-typedef   unsigned long long ull ;
-typedef   double dll ;
 
-#define   mp make_pair
-#define   pb push_back
-#define   ff first 
-#define   ss second
-#define   IOS ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-#define   endl "\n" 
-#define   pll pair<ll, ll>
-#define   all(x) x.begin(), x.end()
-#define   vll vector<ll> 
 struct entity {
-	dll price;
-	dll weight;
+	double price;
+	double weight;
 };
 
 vector<entity> objects;
@@ -26,21 +14,20 @@ bool comp (entity a, entity b) {
 }
 
 int main(){
- IOS
-#ifdef SHAN
-    freopen("input.txt" , "r" , stdin);  
-#endif
-  dll sackSize;
+  double sackSize;
+  cout << "Enter the Sack Size" << endl;
   cin >> sackSize;
-  ll elements;
+  int elements;
+  cout << "Enter the number of elements" << endl;
   cin >> elements;
   objects.resize(elements);
-  for(ll i = 0; i < elements; i++) {
+  cout << "Enter the price and weight of each object" << endl;
+  for(int i = 0; i < elements; i++) {
   	cin >> objects[i].price >> objects[i].weight;
   }
-  sort(all(objects), comp); 
-  dll ans = 0.00;
-  for(ll i = 0; i < elements; i++) {
+  sort(objects.begin(), objects.end(), comp); // comp is custom comparator such that the element with maximum value is at top.
+  double ans = 0.00;
+  for(int i = 0; i < elements; i++) {
   	if(sackSize >= objects[i].weight) {
   	  ans = ans + objects[i].price;
   	  sackSize = sackSize - objects[i].weight;
@@ -49,6 +36,7 @@ int main(){
   	  break;
   	}
   }
+  cout << "The maximum profit is " << endl;
   cout << ans << endl;
   return 0;
 } //good night.

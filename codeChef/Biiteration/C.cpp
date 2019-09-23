@@ -15,34 +15,29 @@ typedef   double dll ;
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
 
-
+const ll MOD  = (ll)(1e9+7);
+ll modmul(ll a, ll b) {
+	return (a%MOD * b%MOD)%MOD;
+}
+ll fact[2000001] ;
+void orial() {
+	fact[0] = 1;
+	fact[1] = 1;
+	for(ll i = 2; i <= 1000010; i++) fact[i] = modmul(fact[i-1], i);
+	for(ll i = 2; i <= 1000010; i++) fact[i] = modmul(fact[i], fact[i-1]);
+}
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  unordered_map<ll, ll> x; 
-  unordered_map<ll, ll> y;
-  map<pll, ll> xy;
-  vector<pll> ae;
-  ll n;
-  cin >> n;
-  for(ll i = 0; i < n; i++) {
-  	ll a, b;
-  	cin >> a >> b;
-  	x[a]++;
-  	y[b]++;
-  	xy[mp(a, b)]++;
-  	ae.pb(mp(a, b));
+  ll T;
+  cin >> T;
+  orial();
+  while(T--){
+   ll n;
+   cin >> n;
+   cout << fact[n] << endl;
   }
-  ll ans = 0;
-  for(ll i = 0; i < n; i++) {
-    ll t = x[ae[i].ff] - 1;
-    t+= y[ae[i].ss] - 1;
-    t-= xy[ae[i]]-1;
-    ans+=t;
-  }
-  ans/=2;
-  cout << ans << endl;
   return 0;
 } //good night.

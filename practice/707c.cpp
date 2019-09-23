@@ -15,34 +15,24 @@ typedef   double dll ;
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
 
-
+bool issqr(ll x) {
+	ll tt = (ll)sqrt(x);
+	return (tt*tt == x);
+}
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  unordered_map<ll, ll> x; 
-  unordered_map<ll, ll> y;
-  map<pll, ll> xy;
-  vector<pll> ae;
   ll n;
   cin >> n;
-  for(ll i = 0; i < n; i++) {
-  	ll a, b;
-  	cin >> a >> b;
-  	x[a]++;
-  	y[b]++;
-  	xy[mp(a, b)]++;
-  	ae.pb(mp(a, b));
+  ll tt = n*n, p;
+  for(ll i = 1; i <= min((ll)1e7, n-1); i++) {
+      p = tt - (i*i);
+      if(issqr(p)) {
+      	cout << i << " " << (ll)sqrt(p) << endl;
+      	return 0;
+      }
   }
-  ll ans = 0;
-  for(ll i = 0; i < n; i++) {
-    ll t = x[ae[i].ff] - 1;
-    t+= y[ae[i].ss] - 1;
-    t-= xy[ae[i]]-1;
-    ans+=t;
-  }
-  ans/=2;
-  cout << ans << endl;
   return 0;
 } //good night.

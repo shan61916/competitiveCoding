@@ -21,28 +21,27 @@ int main(){
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  unordered_map<ll, ll> x; 
-  unordered_map<ll, ll> y;
-  map<pll, ll> xy;
-  vector<pll> ae;
   ll n;
   cin >> n;
-  for(ll i = 0; i < n; i++) {
-  	ll a, b;
-  	cin >> a >> b;
-  	x[a]++;
-  	y[b]++;
-  	xy[mp(a, b)]++;
-  	ae.pb(mp(a, b));
+  vector<ll> a(n+1);
+  ll ans = 1;
+  for(ll i = 1; i <= n; i++) cin >> a[i];
+  vector<vector<ll>> aux(n+1, vector<ll>(11, 0));
+  for(ll i = 1; i <= n; i++) {
+    for(ll j = 1; j <= 10; j++) aux[i][j] = aux[i-1][j];
+    aux[i][a[i]]++;
+    set<ll> st;
+    for(ll j = 1; j <= 10; j++) {
+    	for(ll k = 1; k <= 10; k++) {
+           if(j == k) st.insert(aux[i][k] -1);
+           else st.insert(aux[i][k]);
+    	}
+    	st.erase(0);
+    	// if(i == 13)cout << st.size() << endl;
+    	if(st.size() <= 1) ans = i;
+    	st.clear();
+    }
   }
-  ll ans = 0;
-  for(ll i = 0; i < n; i++) {
-    ll t = x[ae[i].ff] - 1;
-    t+= y[ae[i].ss] - 1;
-    t-= xy[ae[i]]-1;
-    ans+=t;
-  }
-  ans/=2;
   cout << ans << endl;
   return 0;
 } //good night.

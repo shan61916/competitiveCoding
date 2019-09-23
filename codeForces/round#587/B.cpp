@@ -21,28 +21,20 @@ int main(){
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  unordered_map<ll, ll> x; 
-  unordered_map<ll, ll> y;
-  map<pll, ll> xy;
-  vector<pll> ae;
   ll n;
   cin >> n;
+  vector<pair<ll, ll>> a(n);
   for(ll i = 0; i < n; i++) {
-  	ll a, b;
-  	cin >> a >> b;
-  	x[a]++;
-  	y[b]++;
-  	xy[mp(a, b)]++;
-  	ae.pb(mp(a, b));
+  	cin >> a[i].ff;
+  	a[i].ss = i+1;
   }
-  ll ans = 0;
+  sort(all(a), greater<pair<ll, ll>>());
+  ll cost = 0;
   for(ll i = 0; i < n; i++) {
-    ll t = x[ae[i].ff] - 1;
-    t+= y[ae[i].ss] - 1;
-    t-= xy[ae[i]]-1;
-    ans+=t;
+  	cost+= a[i].ff * i;
   }
-  ans/=2;
-  cout << ans << endl;
+  cost+=n;
+  cout << cost << endl;
+  for(auto it: a) cout << it.ss << " " ;
   return 0;
 } //good night.

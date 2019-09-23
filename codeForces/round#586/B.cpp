@@ -1,8 +1,8 @@
   //shan61916
 #include <bits/stdc++.h>
   using namespace std;
-typedef   long long ll;
-typedef   unsigned long long ull ;
+// typedef   long long ll;
+typedef   long long ll ;
 typedef   double dll ;
 
 #define   mp make_pair
@@ -21,28 +21,18 @@ int main(){
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  unordered_map<ll, ll> x; 
-  unordered_map<ll, ll> y;
-  map<pll, ll> xy;
-  vector<pll> ae;
   ll n;
   cin >> n;
+  vector<vector<ll>> a(n, vector<ll>(n, 0));
   for(ll i = 0; i < n; i++) {
-  	ll a, b;
-  	cin >> a >> b;
-  	x[a]++;
-  	y[b]++;
-  	xy[mp(a, b)]++;
-  	ae.pb(mp(a, b));
+  	for(ll j = 0; j < n; j++) cin >> a[i][j];
   }
-  ll ans = 0;
-  for(ll i = 0; i < n; i++) {
-    ll t = x[ae[i].ff] - 1;
-    t+= y[ae[i].ss] - 1;
-    t-= xy[ae[i]]-1;
-    ans+=t;
+  ll tt = (a[0][1] * a[0][2]) / a[1][2]; 
+  ll f =  (ll)(sqrt)(tt);
+  cout << f << " ";
+  for(ll i = 1; i < n; i++) {
+     cout << a[i][0]/f << " ";
   }
-  ans/=2;
-  cout << ans << endl;
+  
   return 0;
 } //good night.

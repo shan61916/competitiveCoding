@@ -14,35 +14,44 @@ typedef   double dll ;
 #define   pll pair<ll, ll>
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
+ll a, b, c;
+bool can(ll mid) {
+   ll rem = 0;
+   if(a >= mid) {
+   	rem+= a-mid;
+   }else return false;
 
+   if(b >= mid) {
+   	rem+= b-mid;
+   } else return false;
+
+   if(rem+c >= mid) {
+   	return true;
+   } 
+   
+   return false;
+}
 
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  unordered_map<ll, ll> x; 
-  unordered_map<ll, ll> y;
-  map<pll, ll> xy;
-  vector<pll> ae;
-  ll n;
-  cin >> n;
-  for(ll i = 0; i < n; i++) {
-  	ll a, b;
-  	cin >> a >> b;
-  	x[a]++;
-  	y[b]++;
-  	xy[mp(a, b)]++;
-  	ae.pb(mp(a, b));
+  ll T;
+  cin >> T;
+  while(T--){
+  cin >> a >> b >> c;
+  ll low = 0, high = a+b+c, mid, ans = 0;
+  while(low <= high) {
+  	mid = (low + high)/2;
+  	if(can(mid)) {
+  		ans = mid;
+  		low = mid+1;
+  	} else {
+  		high = mid-1;
+  	}
   }
-  ll ans = 0;
-  for(ll i = 0; i < n; i++) {
-    ll t = x[ae[i].ff] - 1;
-    t+= y[ae[i].ss] - 1;
-    t-= xy[ae[i]]-1;
-    ans+=t;
-  }
-  ans/=2;
   cout << ans << endl;
+  }
   return 0;
 } //good night.
