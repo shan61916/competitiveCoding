@@ -33,5 +33,5 @@
 *.app
 
 #input 
-.txt
+*.txt
 
