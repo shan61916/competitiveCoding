@@ -15,31 +15,6 @@ typedef   double dll ;
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
 
-/*
-
-NAME - SHUBHAM SHARMA 
-UID - 17BCS1517
-ASSIGNMENT 2 (OPERATING SYSTEMS).
-
-
-The fifo disk scheduling algorithm works on the principal that each disk request 
-should be addressed in the order which they are recieved in.
-
-~Advantages:
-
- ** Every request gets a fair chance
- ** No starvation for any request.
-
-~Disadvantages:
-
- ** Does not try to optimize seek time
- ** May not provide the best possible service
-
-*/
-
-/* Given a list of I/O requests for the disk controller the program will find out 
-the number of seek moments 
-*/
 
 int main(){
   cout << "Enter the Number of incoming I/O requests \n";

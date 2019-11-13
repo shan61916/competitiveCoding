@@ -1,0 +1,1 @@
+/*Given a graph and an integer A, is there a cycle that visits all nodes of the graph whose weigth is less than A*/
