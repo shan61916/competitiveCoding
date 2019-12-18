@@ -14,7 +14,8 @@ typedef   double dll ;
 #define   pll pair<ll, ll>
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
-const ll mx = (ll)(1e6 + 10);
+const ll mxx = (ll) (1ll << 20ll);
+
 int main(){
  IOS
 #ifdef SHAN
@@ -25,29 +26,23 @@ int main(){
   while(T--){
    ll n;
    cin >> n;
-   vll dp(mx, 0);
-   vll arr(n);
+   vll a(n);
+   vll freq(mxx, 0);
    for(ll i = 0; i < n; i++) {
-    ll tp;
-    cin >> tp;
-    dp[tp]++;
-    arr[i] = tp;
+     cin >> a[i];
+     freq[a[i]]++;
    }
-   for(ll i = 0; i < n; i++){
-    for(ll j = 0; j < n; j++) {
-      if(j&(1ll<<i)) {
-        dp[j]+= dp[j^(1ll<<i)];
-      }
-    }
+   for(ll i = 0; i < 20; i++) {
+     for(ll j = 0; j < mxx; j++) {
+       if(j&(1ll<<i)) {
+        freq[j]+= freq[j^(1ll<<i)];
+       }
+     }
    }
    ll ans = 0;
-   for(ll i = 0; i < mx; i++) {
-     ll num = 0;
-     for(ll j = 0; j <= 10; j++) {
-       if(i&(1ll<<j)) continue;
-       num+= (1ll<<j);
-     }
-     ans+= dp[num];
+   ll larg  = mxx - 1;
+   for(ll i = 0; i < n; i++) {
+    ans+= freq[(a[i]^larg)];
    }
    cout << ans << endl;
   }

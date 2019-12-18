@@ -15,44 +15,28 @@ typedef   double dll ;
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
 
+const ll inf = (ll)(1e17 + 17);
+const ll mod = (ll)(1e9 + 7);
+
 
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  ll n, k;
-  cin >> n >> k;
-  vector<pll> a;
-  for(ll i = 0; i < n; i++) {
-  	ll tp;
-  	cin >> tp;
-  	ll x = 1;
-  	a.pb(mp(0, tp));
-  	tp/=2; 
-  	while(1) {
-  	   a.pb(mp(x, tp));
-  	   if(tp == 0) break;
-       tp/=2; 
-       x++;
-  	}
-  }
-  sort(all(a));
-  ll ans =  INT_MAX;
-  unordered_map<ll, ll> done, cost ; 
-  for(ll i = 0; i < (ll)a.size(); i++) {
-  	// cout << a[i].ss << " " << done[a[i].ss] << endl;
-  	if(done[a[i].ss] == k ) {
-  		ans = min(ans, cost[a[i].ss]);
-  	}
-  	else {
-  		done[a[i].ss]++;
-  		cost[a[i].ss]+= a[i].ff;
-  	}
-  }
-  for(auto it: a) {
-  	if(done[it.ss] == k) ans = min(ans , cost[it.ss]) ;
-  }
-  cout << ans << endl;
+   ll T;
+   cin >> T;
+   while(T--) {
+    ll x;
+    cin >> x;
+    ll tt = (4 * x) + 1;
+    ll ans = 0; 
+    vector<ll> res;
+    for(ll i = 1; i*i <= tt; i++) {
+      ans++;
+    }
+    cout << endl;
+    cout << ans << endl;
+   }
   return 0;
 } //good night.

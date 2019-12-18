@@ -1,6 +1,7 @@
+  //shan61916
 #include <bits/stdc++.h>
   using namespace std;
-typedef   long long ll;
+typedef   int ll;
 typedef   unsigned long long ull ;
 typedef   double dll ;
 
@@ -14,47 +15,43 @@ typedef   double dll ;
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
 
+const ll inf = (ll)(1e17 + 17);
+const ll mod = (ll)(1e9 + 7);
+const ll mx = (ll)(1LL<<20);
+ll ct[21][21];
+ll dp[mx];
 
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  ll T;
-  cin >> T;
-  while(T--){
-  ll n, k;
-  cin >> n >> k;
-  vll a(n);
-  for(auto &x : a) cin >> x;
-  ll cycles = k/n;
-  vll done(n, 0);
-  for(ll i = 0; i < n; i++) {
-  	done[i]+= cycles;
-  	if(i < k%n) {
-  		done[i]+=1;
-  	}
+  ll n, m;
+  cin >> n >> m;
+  string s;
+  cin >> s;
+  memset(dp, 0, sizeof dp);
+  memset(ct, 0, sizeof ct);
+  for(ll i = 1; i < n; i++) {
+    ct[s[i]-'a'][s[i-1] - 'a']++;
+    ct[s[i-1] - 'a'][s[i] - 'a']++;
   }
-  vll ans(n, 0);
-  for(ll i = 0; i < n; i++) ans[i] = a[i];
-  for(ll i = 0; i < n; i++) {
-  	if(n%2 == 0 and i == n/2 and done[i]) ans[i] = 0;
-  	if(i < n/2) {
-  		if(done[i]%3 == 1) {
-  			ans[i] = a[i]^(a[n - (i%n) - 1]) ;
-  		} else if(done[i]%3 == 2) {
-  			ans[i] = a[n - (i%n) - 1];
-  		} else ans[i] = a[i];
-  	} else {
-  		if(done[i]%3 == 1) {
-  			ans[i] = (a[n - (i%n) - 1]) ;
-  		} else if(done[i]%3 == 2) {
-  			ans[i] = a[i]^a[n - (i%n) - 1];
-  		} else ans[i] = a[i];
-  	}
+  for(ll j = 0; j < mx; j++) {
+  for(ll i = 0; i < m; i++) {
+      ll turn = __builtin_popcount(j);
+      for(ll k = 0; k < m; k++) {
+        if(i == k) continue;
+        dp[j^(1ll<<k)]+= dp[j];
+        if(j&(1ll<<k)) {
+          dp[j^(1ll<<i)]-= ct[i][k]*(turn + 1);
+        } else {
+          dp[j^(1ll<<i)]+= ct[i][k]*(turn + 1);
+        }
+      }
+    }
   }
-  for(auto it: ans) cout << it << " ";
-  cout << endl;
-  } 
+  cout << dp[0] << endl;
+  // ll tot = (1ll<<m) -1;
+  // cout << dp[tot] << endl;
   return 0;
-} 
+} //good night.

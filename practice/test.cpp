@@ -14,47 +14,33 @@ typedef   double dll ;
 #define   pll pair<ll, ll>
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
-ll n, m;
-string s;
 
-ll fast_exp(ll base, ll exp) {
-    ll res=1;
-    while(exp>0) {
-       if(exp%2==1) res=(res*base);
-       base=(base*base);
-       exp/=2;
-    }
-    return res;
-}
-ll recurse(ll idx, ll sum) {
-  if(idx == n) {
-    if(sum%m == 0) return 1;
-    return 0;
-  }
-  ll ans = 0;
-  if(s[idx] == '_') {
-   ans = ans + recurse(idx+1, (sum%m + fast_exp(2, n-1-idx)%m)%m) ;
-   ans = ans + recurse(idx+1, sum%m);
-  } else if(s[idx] == '1') {
-    ans = ans + recurse(idx+1, (sum%m + fast_exp(2, n-1-idx)%m)%m) ;
-  } else if(s[idx] == '0') {
-    ans = ans + recurse(idx+1, sum%m);
-  }
-  return ans;
-}
+const ll inf = (ll)(1e17 + 17);
+const ll mod = (ll)(1e9 + 7);
+
+
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  ll T;
-  cin >> T;
-  while(T--){
-   cin >> n >> m;
-   cin >> s;
-   // memset(dp, -1, sizeof(dp));
-   ll ans = recurse(0, 0);
-   cout << ans << endl;   
-  }
+  ll n, m;
+  cin >> n >> m;
+  vll a;
+  unordered_map<ll,ll>  key;
+  for(ll i = 0; i < n; i++) a.pb(1); 
+  for(ll j = 0; j < m; j++) a.pb(0);
+  sort(all(a)); 
+  do{
+     ll ct = 0;
+     for(ll i = 0; i < n+m; i++) {
+      if(a[i] == 1) ct++;
+      if(ct == n) {
+         key[i+1]++;
+         break;
+      }
+     }
+    } while(next_permutation(all(a)));
+    for(ll i = 1; i <= n+m; i++) cout << key[i] << " ";
   return 0;
 } //good night.
