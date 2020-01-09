@@ -15,32 +15,36 @@ typedef   double dll ;
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
 
+const ll inf = (ll)(1e17 + 17);
+const ll mod = (ll)(1e9);
+
 
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  ll tc = 1;
   ll T;
   cin >> T;
   while(T--) {
-  cout << "Case #" << tc++ << ": "; 
-  ll n;
-  cin >> n;
-  string s;
-  cin >> s;
-  ll todo = (n+1)/2;
-  ll mx = 0;
-  for(ll i = 0; i < todo; i++) mx+= (ll)(s[i]-'0');
-  ll ans = mx;
-  ll start = 0;
-  for(ll i = todo; i < n; i++) {
-    mx-= (ll)(s[start++]-'0');
-    mx+= (ll)(s[i] -'0');
-    ans = max(ans, mx);
-  }
-  cout << ans << endl;
-  }
+   ll a, b;
+   cin >> a >> b;
+   ll xx = (abs)(a - b);
+   if(xx <= 1) {
+    cout << xx << endl;
+    continue;
+   }
+   ll i = 2; 
+   ll ct = 0;
+   while(1) {
+    ll x =  i*(i+1)/2;
+    if(x%2 == xx%2 and x >= xx) {
+      ct = i;
+      break;
+    }  
+    i++;
+   }
+   cout << ct << endl;
+   }
   return 0;
 } //good night.

@@ -15,32 +15,38 @@ typedef   double dll ;
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
 
+const ll inf = (ll)(1e17 + 17);
+const ll mod = (ll)(1e9 + 7);
+
 
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  ll tc = 1;
   ll T;
   cin >> T;
   while(T--) {
-  cout << "Case #" << tc++ << ": "; 
-  ll n;
-  cin >> n;
-  string s;
-  cin >> s;
-  ll todo = (n+1)/2;
-  ll mx = 0;
-  for(ll i = 0; i < todo; i++) mx+= (ll)(s[i]-'0');
-  ll ans = mx;
-  ll start = 0;
-  for(ll i = todo; i < n; i++) {
-    mx-= (ll)(s[start++]-'0');
-    mx+= (ll)(s[i] -'0');
-    ans = max(ans, mx);
-  }
-  cout << ans << endl;
+   ll n, m;
+   cin >> n >> m;
+   vll a(n), b(n);
+   map<ll, ll> key;
+   for(ll i = 0; i < n; i++) cin >> a[i];
+   for(ll i = 0; i < m; i++) cin >> b[i]; 
+   for(ll i = 0; i < n; i++) key[a[i]] = i;
+   ll ans = 0;
+   ll mx = -1; 
+   ll rem = 0;
+   for(ll i = 0; i < m; i++) {
+    if(key[b[i]] < mx) {
+      ans+=1;
+    } else {
+      ans+= (2*(key[b[i]] - rem) + 1);
+      mx = max(mx, key[b[i]]);
+    }
+    rem++;
+   }
+   cout << ans << endl;
   }
   return 0;
 } //good night.

@@ -14,36 +14,62 @@ typedef   double dll ;
 #define   pll pair<ll, ll>
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
-const ll mx = (ll)(1e6 + 10);
+
+const ll inf = (ll)(1e17 + 17);
+const ll mod = (ll)(1e9 + 7);
+const ll mxn = (ll)(1e5 + 1);
+ll fast_exp(ll base, ll exp) {
+  ll res=1;
+  while(exp>0) {
+    if(exp%2==1) res=(res*base)%mod;
+      base=(base*base)%mod;
+      exp/=2;
+  }
+  return res%mod;
+}
+
+ll modadd(ll x, ll y){return (x%mod + y%mod)%mod;}
+ll modmul(ll x, ll y){return (x%mod * y%mod)%mod;}
+ll modsub(ll x, ll y){return (x%mod - y%mod + mod)%mod;}
+ll moddiv(ll x, ll y){return modmul(x, fast_exp(y, mod-2));}
+
+const ll p = 257;             // base for the hash. (alpha)
+ll pow_p[mxn];
+void prep() {
+  pow_p[0] = 1;               // pre-calculated powers of the base.
+  for(ll i = 1; i < mxn; i++) {
+    pow_p[i] = modmul(pow_p[i-1], p);
+  }
+}
+
+ll addlast(ll currhash, ll val) {
+  currhash = modmul(currhash, p);
+  currhash = modadd(currhash,val);
+  return currhash;
+}
+ll removelast(ll currhash, ll val){
+  currhash = modsub(currhash, val);
+  currhash = moddiv(currhash, p);
+  return currhash;
+}
+ll addfirst(ll currhash, ll val, ll len) {
+  // len is the current length, before adding.
+  ll toadd = modmul(val, pow_p[len]);
+  currhash = modadd(currhash, toadd);
+  return currhash;
+}
+ll removefirst(ll currhash, ll val, ll len){
+  ll torem = modmul(val, pow_p[len]);
+  currhash = modsub(currhash, torem);
+  return currhash;
+}
+
 
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
-  ll T;
-  cin >> T;
-  while(T--){
-   ll n;
-   cin >> n;
-   vll arr(n);
-   for(ll i = 0; i < n; i++) cin >> arr[i];
-   vll freq(mx, 0);
-   for(auto it: arr) freq[it]++;
-   ll dp[mx];
-   for(ll i = 0; i < mx; i++) {
-      dp[i] = max(0LL, freq[i]-1);
-   }
-   for(ll i = 0; i < n; i++) {
-    for(ll j = 0; j < mx; j++) {
-      if(j & (1ll << (arr[i]))) {
-        dp[j]+= dp[j^(1ll << (arr[i]))];
-      }
-    }
-   }
-   ll ans = 0;
-   for(ll i = 0; i < mx; i++) ans+= dp[i];
-   cout << ans/2 << endl;
-  }
+  
   return 0;
 } //good night.

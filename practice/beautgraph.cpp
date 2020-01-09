@@ -1,10 +1,10 @@
-  //shan61916
+ //shan61916
 #include <bits/stdc++.h>
   using namespace std;
 typedef   long long ll;
 typedef   unsigned long long ull ;
 typedef   double dll ;
-
+ 
 #define   mp make_pair
 #define   pb push_back
 #define   ff first 
@@ -14,37 +14,46 @@ typedef   double dll ;
 #define   pll pair<ll, ll>
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
-
+ 
 const ll inf = (ll)(1e17 + 17);
 const ll mod = (ll)(998244353);
 ll modadd(ll x, ll y){return (x%mod + y%mod)%mod;}
 ll modmul(ll x, ll y){return (x%mod * y%mod)%mod;}
-// ll modsub(ll x, ll y){return (x%mod - y%mod + mod)%mod;}
-ll turn = 1;
-void inc() {turn+=1;}
+ll modsub(ll x, ll y){return (x%mod - y%mod + mod)%mod;}
+// ll moddiv(ll x, ll y){return modmul(x, fast_exp(y, mod-2));}
+ll n, m;
 vector<vll> adj;
-vector<ll> visited(100010, 0), had;
-vector<ll> val(100010, 0);
-void dfs(ll idx) {
-  visited[idx] = turn;
+ll turn = 2;
+void inc() {turn++;}
+vll visited(100001), val(100001, 0), had(100010);
+ll ans = 1;
+void dfs(ll idx) { 
   had[idx] = 1;
-  for(auto it: adj[idx]) {
-    if(visited[idx] == turn) continue;
-    if(val[idx] == 1) val[it] = 2, dfs(it);
-    else val[it] = 1, dfs(it);
-  }
-}
-ll ans;
-void reset(){ans = 1;};
-void calc(ll idx) {
+  visited[idx] = turn;
+  // set<ll> st;
   for(auto it: adj[idx]) {
     if(visited[it] == turn) {
-      if(val[it] == val[idx]) ans = modmul(0LL, ans);
+      if(val[idx] == val[it]) {
+        ans*=0LL;
+      }
       continue;
     }
-    ans = modmul(ans, val[it]);
-    dfs(it);
+    if(val[idx] == 1) {
+      val[it] = 2;
+      visited[it] = turn;
+      dfs(it);
+      // st.insert(it);
+    } else {
+      visited[it] = turn;
+      // st.insert(it);
+      val[it] = 1;
+      ans = modmul(ans, 2LL);
+      dfs(it);
+    }
   }
+  // for(auto it: st) {
+  //   dfs(it);
+  // }
 }
 int main(){
  IOS
@@ -54,36 +63,30 @@ int main(){
   ll T;
   cin >> T;
   while(T--) {
-    ll n, m;
     cin >> n >> m;
     adj.clear();
     adj.resize(n+1);
-    had.resize(n+1, 0);
+    had.assign(n+1, 0);
     for(ll i = 1; i <= m; i++) {
       ll x, y;
       cin >> x >> y;
       adj[x].pb(y);
       adj[y].pb(x);
     }
-    inc();
     ll res = 1;
     for(ll i = 1; i <= n; i++) {
       if(had[i] == 1) continue;
+      inc();
+      ans = 1;
       val[i] = 1;
-      ll pp = 0;
-      inc();
       dfs(i);
-      inc();
-      reset();
-      calc(i);
-      pp = modadd(pp, ans);
-      reset();
-      inc();
+      ll a1 = modmul(2LL, ans);
+      ans = 1;
       val[i] = 2;
-      dfs(i);
       inc();
-      calc(i);
-      pp = modadd(pp, modmul(ans, 2LL));
+      dfs(i);
+      ll a2 = ans;
+      ll pp = modadd(a1, a2);
       res = modmul(res, pp);
     }
     cout << res << endl;
