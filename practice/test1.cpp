@@ -15,39 +15,45 @@ typedef   double dll ;
 #define   all(x) x.begin(), x.end()
 #define   vll vector<ll> 
 
-const ll inf = (ll)(1e17 + 17);
-const ll mod = (ll)(1e9 + 7);
-
-
 int main(){
  IOS
 #ifdef SHAN
     freopen("input.txt" , "r" , stdin);  
 #endif
+  ll tc = 1;
+  ll T;
+  cin >> T;
+  while(T--) {
+  cout << "Case #" << tc++ << ": "; 
   ll n;
   cin >> n;
-  string a, b;
-  cin >> a >> b;
-  set<ll> st;
-  for(ll i = 0; i < n; i++) {
-    if(a[i] == '1') a[i] = '0';
-    else a[i] = '1';
-  }
+  vector<pll> a(n);
+  for(ll i = 0; i < n; i++) cin >> a[i].ff >> a[i].ss;
   sort(all(a));
-  sort(all(b));
-  do{
-    do{
-      ll tot = 0;
-      for(ll i = 0; i < n; i++) {
-        if(a[i] == b[i]) tot+= (1ll<<i);
-      }
-      // if(st.find(tot) == st.end()) {
-      //   cout << tot << endl;
-      // }
-      st.insert(tot);
-    } while(next_permutation(all(b))); 
-  } while(next_permutation(all(a)));
-  // for(auto it: st) cout << it << " ";
-  cout << st.size() << endl;
+  vector<char> ans(n); 
+  set<pll> st;
+  bool foo = true;
+  for(ll i = 0; i < n; i++) {
+    while((*st.begin()).ff <= a[i].ff and st.size()) {
+      st.erase(st.begin());
+    }
+    if(st.size() > 1) {
+      foo = false;
+      break;
+    }
+    if(st.size() == 1) {
+      char ch = ans[(*st.begin()).ss];
+      if(ch == 'J'){ st.insert(mp(a[i].ss, i)); ans[i] = 'C'; }
+      else if (ch == 'C'){ st.insert(mp(a[i].ss, i)); ans[i] = 'J'; }
+    } else {st.insert(mp(a[i].ss, i)); ans[i] = 'C';}
+  }
+  if(!foo) {
+    cout << "IMPOSSIBLE" << endl;
+    continue;
+  }
+  for(ll i = 0; i < n; i++) cout << ans[i];
+  cout << endl;
+
+  }
   return 0;
-} //good night.
+} //good night. 
